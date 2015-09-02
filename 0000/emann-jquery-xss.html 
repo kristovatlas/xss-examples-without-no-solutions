@@ -1,0 +1,24 @@
+<!-- based on https://eamann.com/tech/jquery-xss/ -->
+<!-- PoC: https://github.com/kristovatlas/jquery-xss/blob/master/emann-jquery-xss.html -->
+<html>
+    <head>
+        <title>emann jQuery XSS Demo</title>
+        <!-- Apparently this issue was patched in jQuery 1.7, so we'll use 1.6 -->
+        <!-- Note: Apparently it regressed later and jQuery 1.11.1 is also vuln. -->
+        <script type="text/javascript" src="jquery-1.6.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            alert("Started executing JavaScript");
+            
+            alert("window.location.hash=" + window.location.hash);
+            $(document).ready(function(){
+                              if( $( '.class .' + window.location.hash + ' ul')){
+                                    //if-then block
+                              }
+            });
+            alert("Completed jQuery code block...");
+    
+        </script>
+    </body>
+</html>
